@@ -25,6 +25,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command(ScrapData::class)->hourly();
+        $schedule->command(ScrapData::class)->everyTenMinutes();
     }
 }

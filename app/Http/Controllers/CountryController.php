@@ -9,9 +9,11 @@ use Illuminate\Http\Request;
 class CountryController extends Controller
 {
     public function index(){
-        return Country::select(['id', 'name', 'confirmed'])->get()->sortBy(function($country){
+        $collection = Country::select(['id', 'name', 'confirmed'])->get();
+        $collection = $collection->sortByDesc(function($country){
             return intval(str_replace(',', '', $country->confirmed));
         });
+        return $collection->values()->all();
     }
 
     public function search(Request $request){

@@ -53,6 +53,14 @@ class ScrapData extends Command
                 $keys['recovered'] = $key;
             }else if(strpos($node->text(), 'TotalDeaths') !== false){
                 $keys['deaths'] = $key;
+            }else if(strpos($node->text(), 'NewCases') !== false){
+                $keys['new_confirmed'] = $key;
+            }else if(strpos($node->text(), 'NewDeaths') !== false){
+                $keys['new_deaths'] = $key;
+            }else if(strpos($node->text(), 'TotalTests') !== false){
+                $keys['tests'] = $key;
+            }else if(strpos($node->text(), 'Population') !== false){
+                $keys['population'] = $key;
             }
         });
         $this->info("Extracting Required Data Values");
@@ -60,7 +68,7 @@ class ScrapData extends Command
             $country = [];
             foreach ($keys as $name => $index){
                 $index += 1;
-                $country[$name] = $node->filter("td:not(:first-child):nth-child({$index})")->text();
+                $country[$name] = $name === 'name' ? $node->filter("td:not(:first-child):nth-child({$index})")->text() : (($value = intval(str_replace('+', '', str_replace(',', '', $node->filter("td:not(:first-child):nth-child({$index})")->text())))) !== 0 ? $value : null);
             }
             $countries[] = $country;
         });

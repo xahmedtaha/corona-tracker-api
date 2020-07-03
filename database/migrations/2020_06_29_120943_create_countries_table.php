@@ -16,19 +16,23 @@ class CreateCountriesTable extends Migration
         Schema::create('countries', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('confirmed')->nullable();
-            $table->string('deaths')->nullable();
-            $table->string('recovered')->nullable();
 
-            // Used To Detect & Display Daily New Cases (Increases/Decreases etc...)
-            $table->string('latest_confirmed')->nullable(); // "Latest" Means The Number Recorded Before Last Update
-            $table->string('latest_deaths')->nullable();
-            $table->string('latest_recovered')->nullable();
+            // Totals
+            $table->bigInteger('confirmed')->nullable();
+            $table->bigInteger('deaths')->nullable();
+            $table->bigInteger('recovered')->nullable();
+            $table->bigInteger('tests')->nullable();
+            $table->bigInteger('population')->nullable();
 
-            // Timestamps Used To Detect Updates And Their Intervals
-            $table->timestamp('latest_confirmed_update')->nullable();
-            $table->timestamp('latest_deaths_update')->nullable();
-            $table->timestamp('latest_recovered_update')->nullable();
+            // "new" Means The Latest Cases Update, "old" Means The Update Before That One (Used For Statistics)
+            $table->bigInteger('new_confirmed')->nullable();
+            $table->bigInteger('new_deaths')->nullable();
+//            $table->bigInteger('new_recovered')->nullable();
+
+//            $table->bigInteger('old_confirmed')->nullable();
+//            $table->bigInteger('old_deaths')->nullable();
+//            $table->bigInteger('old_recovered')->nullable();
+
             $table->timestamps();
         });
     }
