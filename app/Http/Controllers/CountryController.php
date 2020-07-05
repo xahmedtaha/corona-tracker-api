@@ -12,7 +12,11 @@ class CountryController extends Controller
 {
     public function index(){
         return Cache::get('countriesIndex', function(){
-            return null;
+            $collection = Country::select(['id', 'name'])->get();
+            $collection = $collection->sortByDesc(function($country){
+                return intval(str_replace(',', '', $country->confirmed));
+            });
+            return $collection->values()->all();
         });
     }
 
