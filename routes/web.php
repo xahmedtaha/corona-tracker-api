@@ -20,3 +20,4 @@ $router->get('/', function () use ($router) {
 $router->get('/countries', 'CountryController@index');
 $router->post('/countries/search', 'CountryController@search');
 $router->get('/countries/{id}', 'CountryController@get');
+$router->post('/subscribe/{id}', 'SubscribeController@toggleSubscribtion');

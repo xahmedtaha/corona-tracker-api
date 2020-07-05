@@ -26,5 +26,6 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command(ScrapData::class)->everyTenMinutes();
+        $schedule->command('queue:work --daemon')->everyMinute()->withoutOverlapping();
     }
 }
