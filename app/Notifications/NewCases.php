@@ -28,9 +28,9 @@ class NewCases extends Notification implements ShouldQueue
     public function toFcm($notifiable)
     {
         return FcmMessage::create()
-            ->setData(['country_id' => (string) $this->data['country_id']])
+            ->setData(['country_id' => (string) $this->data['country_id'], 'country_name' => (string) $this->data['country_name']])
             ->setNotification(\NotificationChannels\Fcm\Resources\Notification::create()
-                ->setTitle("New Cases In {$this->data['country_name']}")
+                ->setTitle("Updates In {$this->data['country_name']}")
                 ->setBody("{$this->data['new_confirmed']} New Confirmed Cases, {$this->data['new_deaths']} New Deaths"))
             ->setAndroid(
                 AndroidConfig::create()
